@@ -16,6 +16,7 @@
     templateJumpbox: "Temp-Jumpbox"
     templateRHEL: "Temp-RHEL" 
     templateRocky: "Temp-Rocky" 
+    templatePhoton: "Temp-Photon"
     templateUbuntu: "Temp-Ubuntu" 
     snapShotName: "Prepared"
 
@@ -26,15 +27,15 @@
     - { id: S03, host: 172.0.10.13 }
     - { id: S04, host: 172.0.10.11 }
     - { id: S05, host: 172.0.10.12 }
-#    - { id: S06, host: 172.0.10.13 }
-#    - { id: S07, host: 172.0.10.11 }
-#    - { id: S08, host: 172.0.10.12 }
-#    - { id: S09, host: 172.0.10.13 }
-#    - { id: S10, host: 172.0.10.11 }
-#    - { id: S11, host: 172.0.10.12 }
-#    - { id: S12, host: 172.0.10.13 }
-#    - { id: S13, host: 172.0.10.11 }
-#    - { id: S14, host: 172.0.10.12 }
+    - { id: S06, host: 172.0.10.13 }
+    - { id: S07, host: 172.0.10.11 }
+    - { id: S08, host: 172.0.10.12 }
+    - { id: S09, host: 172.0.10.13 }
+    - { id: S10, host: 172.0.10.11 }
+    - { id: S11, host: 172.0.10.12 }
+    - { id: S12, host: 172.0.10.13 }
+    - { id: S13, host: 172.0.10.11 }
+    - { id: S14, host: 172.0.10.12 }
 
 
   tasks: 
@@ -75,10 +76,10 @@
       hostname: "{{ vcenter_hostname }}"
       username: "{{ vcenter_username }}"
       password: "{{ vcenter_password }}"
-      esxi_hostname: "{{ item[0].host }}"
+      esxi_hostname: "{{ item.host }}"
       validate_certs: no
-      switch: "{{ item[0].id }}"
-      portgroup: "{{ item[0].id + '-Internal' }}"
+      switch: "{{ item.id }}"
+      portgroup: "{{ item.id + '-Internal' }}"
     loop: "{{ SID_ESXi }}"      
     delegate_to: localhost
 
@@ -234,7 +235,7 @@
       folder: "{{ datacenter_name + '/vm/' + parent_folder + '/' + item.id }}"
       esxi_hostname: '{{ item.host }}'
       datastore: "{{ datastore_name }}"
-      template: "{{ templateRocky }}"
+      template: "{{ templateUbuntu }}"
     loop: "{{ SID_ESXi }}"  
     delegate_to: localhost
 
